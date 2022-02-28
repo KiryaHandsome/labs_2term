@@ -21,8 +21,6 @@ set(PROJECT_SOURCES
         library.ui
         reader.h reader.cpp
         book.h book.cpp
-        borrowedbook.h borrowedbook.cpp
-        date.h date.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
