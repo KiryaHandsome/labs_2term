@@ -16,6 +16,7 @@
 #include "hexagon.h"
 #include "triangle.h"
 #include "dialogwindow.h"
+#include "canvas.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -45,6 +46,7 @@ private:
         zoomOut
     };
     DialogWindow window;
+    Canvas canvas;
 
 
 
@@ -85,6 +87,8 @@ private slots:
     void perimeterButton_clicked();
     void centerMassButton_clicked();
     void changeSizeButton_clicked();
+
+    void drawFigureButton_clicked();
 };
 
 

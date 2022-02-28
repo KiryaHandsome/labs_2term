@@ -3,17 +3,12 @@
 
 #include <QString>
 
+
 class Book
 {
 public:
-    Book(int code = 0, QString authorSurname = "Dostoevskiy", QString title = "Idiot", int year = 1990, QString language = "Russian");
+    Book(int code = 0, QString authorSurname = "none", QString title = "none", int year = 0, QString language = "none");
     ~Book();
-
-    void setBookCode(int code);
-    void setAuthorSurname(QString surname);
-    void setTitle(QString title);
-    void setYear(int year);
-    void setLanguage(QString language);
 
     int getBookCode() const;
     QString getAuthorSurname() const;

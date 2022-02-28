@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void createUI(const QStringList &);
+    int createUI(const QStringList &headers, QString file_name = "file.txt");
 
 private slots:
     void nextDayButton_clicked();
@@ -37,7 +37,7 @@ private slots:
 
     void addDateButton_clicked();
 
-    void on_actionOpen_triggered();
+    void actionOpen_triggered();
 
 private:
     Dialog window;

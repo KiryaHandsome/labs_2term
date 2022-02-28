@@ -2,28 +2,28 @@
 #define READER_H
 
 #include <QString>
+#include "book.h"
 
 class Reader
 {
 public:
-    Reader(int code = 0, QString FIO = "Sasha", QString homeAddrress = "Sovetskaya 23", QString contactNumber = "+12345678");
+    Reader(int code = 0, QString FIO = "none", QString homeAddress = "none", long contactNumber = 0);
     ~Reader();
 
-    void setCode(int code);
-    void setFIO(QString FIO);
-    void setContactNumber(QString number);
-    void setHomeAddress(QString address);
+
+    Book* book = 0;
 
     int getCode() const;
     QString getHomeAddress() const;
     QString getFIO() const;
-    QString getContactNumber() const;
+    long getContactNumber() const;
 
-private:        //код читателя, ФИО читателя, домашний адрес, контактный телефон
-    int code;
+
+private:
+    int code;   //код читателя
     QString FIO; //фио читателя
     QString homeAddress;
-    QString contactNumber;
+    long contactNumber;
 };
 
 #endif // READER_H

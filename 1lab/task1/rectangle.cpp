@@ -16,10 +16,18 @@ Rectangle::Rectangle(QWidget *parent)
     image = new QPixmap(":/body.png");
     label->setPixmap(*image);
     label->show();
-    label->setGeometry(300, 130, 360, 300);
-    x = 300; y = 130;
+    label->setGeometry(300, 132, 360, 300);
+    x = 300; y = 132;
 
     label->setAlignment(Qt::AlignBottom | Qt::AlignRight);  //move pixmap to right bottom
+
+    /*background = new QLabel(this);
+    background->setGeometry(50, 150, 1400, 600);
+    QPixmap fon(":/townRoad");
+    fon.scaled(1400, 600);
+    background->setPixmap(fon);
+    //background->show();
+    background->lower();*/
 
     QPixmap my_background(":/townRoad");
     my_background = my_background.scaled(this->size(), Qt::IgnoreAspectRatio);
@@ -27,7 +35,7 @@ Rectangle::Rectangle(QWidget *parent)
     palette.setBrush(QPalette::Window, my_background);
     this->setPalette(palette);
 
-    ui->centralwidget->setStyleSheet("background-color: transparent");
+    //ui->centralwidget->setStyleSheet("background-color: transparent");
 
 }
 
@@ -98,7 +106,7 @@ void Truck::keyPressEvent(QKeyEvent* event)
             wheel2->setGeometry(x + 380 - 5, y + 350, wheel2->width(), wheel2->height());
 
             QTransform* trans = new QTransform;
-            wheelAngle -= 3;
+            wheelAngle -= 4;
             trans->rotate(wheelAngle);
             wheel1->setPixmap(wheelImage->transformed(*trans));     //rotate wheels
             wheel2->setPixmap(wheelImage->transformed(*trans));
@@ -124,7 +132,7 @@ void Truck::keyPressEvent(QKeyEvent* event)
             wheel2->setGeometry(x + 380 + 5, y + 350, wheel2->width(), wheel2->height());
 
             QTransform* trans = new QTransform;
-            wheelAngle += 3;
+            wheelAngle += 4;
             trans->rotate(wheelAngle);
             wheel1->setPixmap(wheelImage->transformed(*trans)); //rotate wheels
             wheel2->setPixmap(wheelImage->transformed(*trans));
@@ -133,15 +141,15 @@ void Truck::keyPressEvent(QKeyEvent* event)
             x = (x + 5) % ui->centralwidget->width();
         }
         break;
-    case Qt::Key_PageUp:        //body up
-        if(angle > -45){
+    case Qt::Key_Up:        //body up
+        if(angle > -35){
             QTransform* trans = new QTransform;
             trans->rotate(--angle);
             label->setPixmap(image->transformed(*trans));
             delete trans;
         }
         break;
-    case Qt::Key_PageDown:      //body down
+    case Qt::Key_Down:      //body down
         if(angle < 0){
             QTransform* trans = new QTransform;
             trans->rotate(++angle);

@@ -33,6 +33,7 @@ set(PROJECT_SOURCES
         eightpointedstar.h eightpointedstar.cpp
         hexagon.h hexagon.cpp
         dialogwindow.h dialogwindow.cpp dialogwindow.ui
+        canvas.h canvas.cpp canvas.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

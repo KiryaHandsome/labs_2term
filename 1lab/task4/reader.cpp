@@ -1,30 +1,21 @@
 #include "reader.h"
+#include <QStringList>
 
-Reader::Reader(int code, QString FIO, QString homeAddress, QString contactNumber)
+Reader::Reader(int code, QString FIO, QString homeAddress, long contactNumber)
     : code(code), FIO(FIO), homeAddress(homeAddress), contactNumber(contactNumber)
 {
 
 }
+
 Reader::~Reader()
 {
 
 }
 
-void Reader::setCode(int code)
+QString Reader::getHomeAddress() const
 {
-    this->code = code;
+    return homeAddress;
 }
-
-void Reader::setFIO(QString FIO)
-{
-    this->FIO = FIO;
-}
-
-void Reader::setContactNumber(QString number)
-{
-    this->contactNumber = number;
-}
-
 int Reader::getCode() const
 {
     return code;
@@ -33,17 +24,8 @@ QString Reader::getFIO() const
 {
     return FIO;
 }
-QString Reader::getContactNumber() const
+long Reader::getContactNumber() const
 {
     return contactNumber;
 }
 
-void Reader::setHomeAddress(QString address)
-{
-    homeAddress = address;
-}
-
-QString Reader::getHomeAddress() const
-{
-    return homeAddress;
-}

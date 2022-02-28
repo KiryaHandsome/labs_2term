@@ -1,57 +1,29 @@
 #include "borrowedbook.h"
 
-BorrowedBook::BorrowedBook(int readerCode, int bookCode, QDate dateOfIssue, int backPeriod, QDate backDate)
-    : readerCode(readerCode), bookCode(bookCode), dateOfIssue(dateOfIssue), backPeriod(backPeriod), backDate(backDate)
+BorrowedBook::BorrowedBook(Date dateOfIssue, Date backDate, int bookCode, int readerCode, int backPeriod)
+    : bookCode(bookCode), readerCode(readerCode),
+      backPeriod(backPeriod), dateOfIssue(dateOfIssue), backDate(backDate)
 {
 
 }
 
-void BorrowedBook::setReaderCode(int code)
-{
-    this->readerCode = code;
-}
-
-void BorrowedBook::setBookCode(int code)
-{
-    this->bookCode = code;
-}
-
-void BorrowedBook::setDateOfIssue(QDate date)
-{
-    dateOfIssue = date;
-}
-
-void BorrowedBook::setBackPeriod(int days)
-{
-    backPeriod = days;
-}
-
-void BorrowedBook::setBackDate(QDate date)
-{
-    backDate = date;
-}
-
-int BorrowedBook::getReaderCode() const
-{
-    return readerCode;
-}
-
-int BorrowedBook::getBookCode() const
+int BorrowedBook::getBookCode()
 {
     return bookCode;
 }
-
-QDate BorrowedBook::getDateOfIssue() const
+int BorrowedBook::getReaderCode()
+{
+    return readerCode;
+}
+Date BorrowedBook::getDateOfIssue()
 {
     return dateOfIssue;
 }
-
-int BorrowedBook::getBackPeriod() const
+int BorrowedBook::getBackPeriod()
 {
     return backPeriod;
 }
-
-QDate BorrowedBook::getBackDate() const
+Date BorrowedBook::getBackDate()
 {
     return backDate;
 }

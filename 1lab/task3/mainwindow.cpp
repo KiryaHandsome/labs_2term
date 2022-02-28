@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QFileDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
-    fileName = "file.txt";
 
     this->createUI(QStringList() << ("Date")
                                  << ("Next day")
@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->durationButton, SIGNAL(clicked()), this, SLOT(durationButton_clicked()));
     connect(ui->changeDateButton, SIGNAL(clicked()), this, SLOT(changeDateButton_clicked()));
     connect(ui->addDateButton, SIGNAL(clicked()), this, SLOT(addDateButton_clicked()));
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(on_actionOpen_triggered()));
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(actionOpen_triggered()));
 
     QString tmp;
     for(int i = 1 ; i <= ui->tableWidget->rowCount(); i++){
@@ -48,7 +48,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::createUI(const QStringList &headers) //return amount of strings
+int MainWindow::createUI(const QStringList &headers, QString file_name)
 {
     ui->tableWidget->clear();   //clear table
     ui->tableWidget->setRowCount(0);
@@ -61,17 +61,26 @@ void MainWindow::createUI(const QStringList &headers) //return amount of strings
     ui->tableWidget->setHorizontalHeaderLabels(headers);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    QFile file(fileName);
+    QFile file(file_name);
     int count = 0;
     if(file.open(QIODevice::ReadWrite)){
         QTextStream stream(&file);
 
         QString line; //temporary string
+
         while(!stream.atEnd()) {
             stream >> line;
-            ++count;        //count of dates in file
+            if(line == ""){
+
+            }
+            else if(!Date().isCorrect(line)){
+                file.close();
+                QMessageBox::warning(this, "Error", "Data in file not correct!\nChoose another file.");
+                return -1;
+            }
+            else ++count; //count dates in file
         }
-        count -= 1;
+        if(info) delete [] info;
         info = new Date[count]; //allocate memory to input data from file
 
         stream.seek(0);   //set pointer at the beginning
@@ -80,12 +89,13 @@ void MainWindow::createUI(const QStringList &headers) //return amount of strings
             info[i].readDate(line); //iterate in array
         }
         file.close();
+        for(int i = 0; i < count; i++){
+            ui->tableWidget->insertRow(i);
+            ui->tableWidget->setItem(i, 0, new QTableWidgetItem(info[i].showDate())); //add dates to table
+        }
+        ui->tableWidget->resizeColumnsToContents();
     }
-    for(int i = 0; i < count; i++){
-        ui->tableWidget->insertRow(i);
-        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(info[i].showDate())); //add dates to table
-    }
-    ui->tableWidget->resizeColumnsToContents();
+    return 0;
 }
 
 void MainWindow::nextDayButton_clicked()
@@ -153,27 +163,32 @@ void MainWindow::addDateButton_clicked()
 }
 
 
-void MainWindow::on_actionOpen_triggered()
+void MainWindow::actionOpen_triggered()
 {
-    fileName = QFileDialog::getOpenFileName(this, "Choose file", "C:\\");
+    QString name = QFileDialog::getOpenFileName(this, "Choose file", "C:\\", "*.txt");
 
-    if(QFile(fileName).open(QIODevice::ReadWrite)){
-        if(info) delete [] info;
+    if(QFile(name).open(QIODevice::ReadWrite)){
 
-        this->createUI(QStringList() << ("Date")
-                                     << ("Next day")
-                                     << ("is Leap")
-                                     << ("Previous day")
-                                     << ("Duration")
-                                     << ("Week number"));
-        window.setFileName(fileName);
-        ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        ui->comboBox->clear();
-        QString tmp;
-        for(int i = 1 ; i <= ui->tableWidget->rowCount(); i++){
-            tmp = QString::number(i);
-            ui->comboBox->addItem(tmp);
+
+
+        int res = this->createUI(QStringList()   << ("Date")
+                                                 << ("Next day")
+                                                 << ("is Leap")
+                                                 << ("Previous day")
+                                                 << ("Duration")
+                                                 << ("Week number"), name);
+        if(res == 0){
+            fileName = name;
+            window.setFileName(fileName);
+            ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            ui->comboBox->clear();
+            QString tmp;
+            for(int i = 1 ; i <= ui->tableWidget->rowCount(); i++){
+                tmp = QString::number(i);
+                ui->comboBox->addItem(tmp);
+            }
         }
+
     }
 }
 

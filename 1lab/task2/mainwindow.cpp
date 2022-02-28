@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->eightPButton, SIGNAL(clicked()), this, SLOT(eightPButton_clicked()));
     connect(ui->hexagonButton, SIGNAL(clicked()), this, SLOT(hexagonButton_clicked()));
     connect(ui->parallButton, SIGNAL(clicked()), this, SLOT(parallButton_clicked()));
+    connect(ui->drawFigureButton, SIGNAL(clicked()), this, SLOT(drawFigureButton_clicked()));
 
     timer = new QTimer[8];
     for(int i = 0; i < 8; i++) timer[i].setParent(this);
@@ -296,8 +297,14 @@ void MainWindow::centerMassButton_clicked()
 void MainWindow::changeSizeButton_clicked()
 {
     if(object) {
+        window.setLabelText(object);
         window.show();
     }
+}
+
+void MainWindow::drawFigureButton_clicked()
+{
+    canvas.show();
 }
 
 

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(task4 VERSION 0.1 LANGUAGES CXX)
+project(newTask4 VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -16,46 +16,46 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        library.cpp
+        library.h
+        library.ui
         reader.h reader.cpp
         book.h book.cpp
-        library.h library.cpp
         borrowedbook.h borrowedbook.cpp
+        date.h date.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(task4
+    qt_add_executable(newTask4
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
 # Define target properties for Android with Qt 6 as:
-#    set_property(TARGET task4 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#    set_property(TARGET newTask4 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
-        add_library(task4 SHARED
+        add_library(newTask4 SHARED
             ${PROJECT_SOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(task4
+        add_executable(newTask4
             ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
-target_link_libraries(task4 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(newTask4 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-set_target_properties(task4 PROPERTIES
+set_target_properties(newTask4 PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(task4)
+    qt_finalize_executable(newTask4)
 endif()

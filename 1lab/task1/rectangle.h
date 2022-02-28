@@ -17,7 +17,7 @@ public:
     Rectangle(QWidget *parent = nullptr);
     ~Rectangle();
     QPixmap* image;
-
+    QLabel* background;
     virtual void keyPressEvent(QKeyEvent*);
 
 protected:

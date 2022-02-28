@@ -8,6 +8,11 @@ Date::Date(int day, int month, int year) :
 {
     if(this->isLeap()) this->Days[1] = 29;
 }
+Date::Date(const Date& date)
+    : day(date.day), month(date.month), year(date.year)
+{
+
+}
 
 int Date::getDay() const { return day; }
 
@@ -149,14 +154,13 @@ int Date::daysTillYourBirthday(Date birthdayDate)
 bool Date::isCorrect(QString date)
 {
     int count_points = 0;
-    QStringList list = date.split(QLatin1Char('.'));
-    if(list.size() != 3) return false;
     for(int i = 0; i < date.size(); i++){
         if(date[i] == '.') count_points++;
         else if(!QChar(date[i]).isDigit()) return false;
     }
     if(count_points != 2) return false;
 
+    QStringList list = date.split(QLatin1Char('.'));
     int Day = list[0].toInt();
     int Month = list[1].toInt();
     int Year = list[2].toInt();
