@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include "book.h"
 #include "reader.h"
-#include "borrowedbook.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Library; }
@@ -68,7 +67,6 @@ private:
     Ui::Library *ui;
     Book* bookList;
     Reader* readerList;
-    BorrowedBook* borrowedBooks;
 };
 
 bool containsDigit(const QString& string);

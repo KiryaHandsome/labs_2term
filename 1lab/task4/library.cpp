@@ -28,6 +28,19 @@ Library::Library(QWidget *parent)
     connect(ui->deleteBookButton, SIGNAL(clicked()), this, SLOT(deleteBookButton_clicked()));
     connect(ui->deleteReaderButton, SIGNAL(clicked()), this, SLOT(deleteReaderButton_clicked()));
 
+
+    ui->bookCodeEdit->setMaxLength(12);
+    ui->authorSurnameEdit->setMaxLength(20);
+    ui->titleEdit->setMaxLength(25);
+    ui->yearEdit->setMaxLength(8);
+    ui->languageEdit->setMaxLength(12);
+
+    ui->readerCodeEdit->setMaxLength(15);
+    ui->readerFIOEdit->setMaxLength(30);
+    ui->addressEdit->setMaxLength(25);
+    ui->phoneEdit->setMaxLength(14);
+
+
     this->readBooksFromFile();
     this->readReadersFromFile();
 
@@ -38,9 +51,8 @@ Library::Library(QWidget *parent)
 
 Library::~Library()
 {
-    delete [] bookList;
-    delete [] readerList;
-    delete [] borrowedBooks;
+    if(booksAmount != 0)  delete [] bookList;
+    if(readersAmount != 0) delete [] readerList;
     delete ui;
 }
 
